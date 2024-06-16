@@ -24,9 +24,9 @@ class AnnotationValidatorTest {
         List<String> errors = validator.validate(user);
 
         Assertions.assertEquals(3, errors.size());
-        Assertions.assertEquals("Name length must be between 3 and 50", errors.get(0));
-        Assertions.assertEquals("Age must not be null", errors.get(1));
-        Assertions.assertEquals("Age must be an integer", errors.get(2));
+        Assertions.assertEquals("name length must be between 3 and 50", errors.get(0));
+        Assertions.assertEquals("age must not be null", errors.get(1));
+        Assertions.assertEquals("age must be an integer", errors.get(2));
     }
 
     @Test

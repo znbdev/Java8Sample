@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnnotationValidator {
+    private static final String FIELD_NAME_PLACEHOLDER = "{fieldName}";
+
     public List<String> validate(Object obj) {
         List<String> errors = new ArrayList<>();
-
         Class<?> clazz = obj.getClass();
         for (Field field : clazz.getDeclaredFields()) {
             field.setAccessible(true);
@@ -15,33 +16,47 @@ public class AnnotationValidator {
                 Object value = field.get(obj);
 
                 if (field.isAnnotationPresent(NotNull.class)) {
-                    NotNull notNull = field.getAnnotation(NotNull.class);
-                    if (value == null) {
-                        errors.add(notNull.message());
-                    }
+                    validateNotNull(value, field.getAnnotation(NotNull.class), errors, field.getName());
                 }
 
                 if (field.isAnnotationPresent(Length.class) && value instanceof String) {
-                    Length length = field.getAnnotation(Length.class);
-                    String strValue = (String) value;
-                    if (strValue.length() < length.min() || strValue.length() > length.max()) {
-                        errors.add(length.message().replace("{min}", String.valueOf(length.min()))
-                                .replace("{max}", String.valueOf(length.max())));
-                    }
+                    validateStringLength((String) value, field.getAnnotation(Length.class), errors, field.getName());
                 }
 
                 if (field.isAnnotationPresent(Type.class)) {
-                    Type type = field.getAnnotation(Type.class);
-                    if (!type.value().isInstance(value)) {
-                        errors.add(type.message().replace("{value}", type.value().getSimpleName()));
-                    }
+                    validateType(value, field.getAnnotation(Type.class), errors, field.getName());
                 }
-
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                e.printStackTrace(); // TODO: Change to error log
+            } finally {
+                field.setAccessible(false);
             }
         }
 
         return errors;
     }
+
+    private void validateNotNull(Object value, NotNull annotation, List<String> errors, String fieldName) {
+        if (value == null) {
+            errors.add(annotation.message().replace(FIELD_NAME_PLACEHOLDER, fieldName));
+        }
+    }
+
+    private void validateStringLength(String strValue, Length annotation, List<String> errors, String fieldName) {
+        if (strValue.length() < annotation.min() || strValue.length() > annotation.max()) {
+            errors.add(annotation.message()
+                    .replace("{min}", String.valueOf(annotation.min()))
+                    .replace("{max}", String.valueOf(annotation.max()))
+                    .replace(FIELD_NAME_PLACEHOLDER, fieldName));
+        }
+    }
+
+    private void validateType(Object value, Type annotation, List<String> errors, String fieldName) {
+        if (!annotation.value().isInstance(value)) {
+            errors.add(annotation.message().replace("{value}", annotation.value().getSimpleName())
+                    .replace(FIELD_NAME_PLACEHOLDER, fieldName));
+        }
+    }
 }
+
+

@@ -7,12 +7,12 @@ import lombok.Data;
 
 @Data
 public class User {
-    @NotNull(message = "Name must not be null")
-    @Length(min = 3, max = 50, message = "Name length must be between 3 and 50")
+    @NotNull(message = "{fieldName} must not be null")
+    @Length(min = 3, max = 50, message = "{fieldName} length must be between 3 and 50")
     private String name;
 
-    @NotNull(message = "Age must not be null")
-    @Type(value = Integer.class, message = "Age must be an integer")
+    @NotNull(message = "{fieldName} must not be null")
+    @Type(value = Integer.class, message = "{fieldName} must be an integer")
     private Integer age;
 
     public User(String name, Integer age) {
