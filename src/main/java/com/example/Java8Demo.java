@@ -1,5 +1,8 @@
 package com.example;
 
+import com.example.annotation.AnnotationValidator;
+import com.example.entity.User;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,5 +27,20 @@ public class Java8Demo {
             }
             System.out.println("lambda forEach循环 " + e);
         });
+    }
+
+    public static void userValidator() {
+        User user = new User("John", 25);
+        AnnotationValidator validator = new AnnotationValidator();
+
+        List<String> errors = validator.validate(user);
+
+        if (errors.isEmpty()) {
+            System.out.println("User is valid");
+        } else {
+            System.out.println("Validation errors:");
+            errors.forEach(System.out::println);
+        }
+
     }
 }
