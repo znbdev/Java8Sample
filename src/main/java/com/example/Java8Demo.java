@@ -1,5 +1,11 @@
 package com.example;
 
+import com.example.bean.User;
+import com.example.validator.CustomTypeValidator;
+import com.example.validator.FieldValidator;
+import com.example.validator.LengthValidator;
+import com.example.validator.NotNullValidator;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,4 +31,28 @@ public class Java8Demo {
             System.out.println("lambda forEach循环 " + e);
         });
     }
+
+    public static void validator() {
+        User user = new User("John", 25);
+
+        FieldValidator nameValidator = new FieldValidator(user.getName())
+                .addValidator(new NotNullValidator(), Object.class)
+                .addValidator(new LengthValidator(3, 50), String.class);
+
+        FieldValidator ageValidator = new FieldValidator(user.getAge())
+                .addValidator(new NotNullValidator(), Object.class)
+                .addValidator(new CustomTypeValidator<>(Integer.class), Object.class);
+
+        List<String> nameErrors = nameValidator.validate();
+        List<String> ageErrors = ageValidator.validate();
+
+        if (nameErrors.isEmpty() && ageErrors.isEmpty()) {
+            System.out.println("User is valid");
+        } else {
+            System.out.println("Validation errors:");
+            nameErrors.forEach(System.out::println);
+            ageErrors.forEach(System.out::println);
+        }
+    }
+
 }
