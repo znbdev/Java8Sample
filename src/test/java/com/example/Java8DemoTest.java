@@ -10,7 +10,7 @@ class Java8DemoTest {
     }
 
     @Test
-    void userValidatorTest() {
-        Java8Demo.userValidator();
+    void validatorDemoTest() {
+        Java8Demo.validatorDemo();
     }
 }
