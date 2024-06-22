@@ -1,9 +1,6 @@
 package com.example.db.h2;
 
-import com.example.bean.TestBean;
 import com.example.config.DataSourceConfig;
-import com.example.dao.TestBeanDao;
-import org.h2.jdbcx.JdbcDataSource;
 
 import javax.sql.DataSource;
 import java.io.IOException;
