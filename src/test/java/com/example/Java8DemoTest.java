@@ -1,16 +1,16 @@
 package com.example;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class Java8DemoTest {
+class Java8DemoTest {
 
     @Test
-    public void forEachDemo() {
+    void forEachDemo() {
         Java8Demo.forEachDemo();
     }
 
     @Test
-    public void userValidatorTest() {
+    void userValidatorTest() {
         Java8Demo.userValidator();
     }
 }

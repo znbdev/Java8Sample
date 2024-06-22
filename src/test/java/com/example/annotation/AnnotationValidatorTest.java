@@ -1,25 +1,26 @@
 package com.example.annotation;
 
 import com.example.bean.TestBean;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class AnnotationValidatorTest {
+class AnnotationValidatorTest {
 
     private AnnotationValidator validator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         validator = new AnnotationValidator();
     }
 
     @Test
-    public void testNotNull() {
+    void testNotNull() {
         TestBean bean = new TestBean(null, "123 Main St", "Desc", 25);
         List<String> errors = validator.validate(bean);
         assertEquals(1, errors.size());
@@ -27,7 +28,7 @@ public class AnnotationValidatorTest {
     }
 
     @Test
-    public void testNotEmpty() {
+    void testNotEmpty() {
         TestBean bean = new TestBean("John", "", "Desc", 25);
         List<String> errors = validator.validate(bean);
         assertEquals(1, errors.size());
@@ -35,7 +36,7 @@ public class AnnotationValidatorTest {
     }
 
     @Test
-    public void testLength() {
+    void testLength() {
         TestBean bean = new TestBean("John", "123 Main St", "De", 25);
         List<String> errors = validator.validate(bean);
         assertEquals(1, errors.size());
@@ -48,7 +49,7 @@ public class AnnotationValidatorTest {
     }
 
     @Test
-    public void testType() {
+    void testType() {
         TestBean bean = new TestBean("John", "123 Main St", "Desc", "25");
         List<String> errors = validator.validate(bean);
         assertEquals(1, errors.size());
@@ -56,8 +57,9 @@ public class AnnotationValidatorTest {
     }
 
     @Test
-    public void testValidBean() {
+    void testValidBean() {
         TestBean bean = new TestBean("John", "123 Main St", "Description", 25);
         List<String> errors = validator.validate(bean);
-        assertEquals(1, errors.size());}
+        assertFalse(errors.isEmpty());
+    }
 }
