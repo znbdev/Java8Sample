@@ -17,7 +17,9 @@ repositories {
 dependencies {
     implementation 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    implementation 'com.h2database:h2:2.2.224'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'com.h2database:h2:2.2.224'
 }
 
 test {
