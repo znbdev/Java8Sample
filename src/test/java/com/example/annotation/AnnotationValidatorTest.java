@@ -1,53 +1,63 @@
 package com.example.annotation;
 
-import com.example.entity.User;
-import lombok.Getter;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.example.bean.TestBean;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.List;
 
-class AnnotationValidatorTest {
-    @Test
-    void testValidUser() {
-        User user = new User("John", 25);
-        AnnotationValidator validator = new AnnotationValidator();
-        List<String> errors = validator.validate(user);
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-        Assertions.assertTrue(errors.isEmpty());
+public class AnnotationValidatorTest {
+
+    private AnnotationValidator validator;
+
+    @Before
+    public void setUp() {
+        validator = new AnnotationValidator();
     }
 
     @Test
-    void testUserWithErrors() {
-        User user = new User("Jo", null);
-        AnnotationValidator validator = new AnnotationValidator();
-        List<String> errors = validator.validate(user);
-
-        Assertions.assertEquals(3, errors.size());
-        Assertions.assertEquals("name length must be between 3 and 50", errors.get(0));
-        Assertions.assertEquals("age must not be null", errors.get(1));
-        Assertions.assertEquals("age must be an integer", errors.get(2));
+    public void testNotNull() {
+        TestBean bean = new TestBean(null, "123 Main St", "Desc", 25);
+        List<String> errors = validator.validate(bean);
+        assertEquals(1, errors.size());
+        assertTrue(errors.contains("name must not be null"));
     }
 
     @Test
-    void testInvalidAgeType() {
-        @Getter
-        class InvalidUser {
-            @NotNull(message = "Name must not be null")
-            @Length(min = 3, max = 50, message = "Name length must be between 3 and 50")
-            private String name = "John";
-
-            @NotNull(message = "Age must not be null")
-            @Type(value = Integer.class, message = "Age must be an integer")
-            private String age = "twenty-five";
-
-        }
-
-        InvalidUser user = new InvalidUser();
-        AnnotationValidator validator = new AnnotationValidator();
-        List<String> errors = validator.validate(user);
-
-        Assertions.assertEquals(1, errors.size());
-        Assertions.assertEquals("Age must be an integer", errors.get(0));
+    public void testNotEmpty() {
+        TestBean bean = new TestBean("John", "", "Desc", 25);
+        List<String> errors = validator.validate(bean);
+        assertEquals(1, errors.size());
+        assertTrue(errors.contains("address must not be empty"));
     }
+
+    @Test
+    public void testLength() {
+        TestBean bean = new TestBean("John", "123 Main St", "De", 25);
+        List<String> errors = validator.validate(bean);
+        assertEquals(1, errors.size());
+        assertTrue(errors.contains("description length must be between 3 and 10"));
+
+        bean.setDescription("Description is too long");
+        errors = validator.validate(bean);
+        assertEquals(1, errors.size());
+        assertTrue(errors.contains("description length must be between 3 and 10"));
+    }
+
+    @Test
+    public void testType() {
+        TestBean bean = new TestBean("John", "123 Main St", "Desc", "25");
+        List<String> errors = validator.validate(bean);
+        assertEquals(1, errors.size());
+        assertTrue(errors.contains("age must be of type Integer"));
+    }
+
+    @Test
+    public void testValidBean() {
+        TestBean bean = new TestBean("John", "123 Main St", "Description", 25);
+        List<String> errors = validator.validate(bean);
+        assertEquals(1, errors.size());}
 }

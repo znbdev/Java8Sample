@@ -11,12 +11,16 @@ public class AnnotationValidator {
         List<String> errors = new ArrayList<>();
         Class<?> clazz = obj.getClass();
         for (Field field : clazz.getDeclaredFields()) {
-            field.setAccessible(true);
+            field.setAccessible(true); // 设置可访问性
             try {
                 Object value = field.get(obj);
 
                 if (field.isAnnotationPresent(NotNull.class)) {
                     validateNotNull(value, field.getAnnotation(NotNull.class), errors, field.getName());
+                }
+
+                if (field.isAnnotationPresent(NotEmpty.class)) {
+                    validateNotEmpty(value, field.getAnnotation(NotEmpty.class), errors, field.getName());
                 }
 
                 if (field.isAnnotationPresent(Length.class) && value instanceof String) {
@@ -29,7 +33,7 @@ public class AnnotationValidator {
             } catch (IllegalAccessException e) {
                 e.printStackTrace(); // TODO: Change to error log
             } finally {
-                field.setAccessible(false);
+                field.setAccessible(false); // 恢复可访问性
             }
         }
 
@@ -38,6 +42,12 @@ public class AnnotationValidator {
 
     private void validateNotNull(Object value, NotNull annotation, List<String> errors, String fieldName) {
         if (value == null) {
+            errors.add(annotation.message().replace(FIELD_NAME_PLACEHOLDER, fieldName));
+        }
+    }
+
+    private void validateNotEmpty(Object value, NotEmpty annotation, List<String> errors, String fieldName) {
+        if (value == null || (value instanceof String && ((String) value).isEmpty())) {
             errors.add(annotation.message().replace(FIELD_NAME_PLACEHOLDER, fieldName));
         }
     }
@@ -58,5 +68,3 @@ public class AnnotationValidator {
         }
     }
 }
-
-
