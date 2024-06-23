@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+<h1>Menu</h1>
+<p id="userInfo"></p>
+
+<script>
+    fetch('api/profile')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('userInfo').innerText = `User ID: ${data.userId}, Role: ${data.userRole}`;
+        });
+</script>
+</body>
+</html>
