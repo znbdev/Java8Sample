@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class H2DatabaseTestDataMakerTest {
+public class H2DatabaseDataMakerTest {
 
     @Mock
     private DataSource mockDataSource;

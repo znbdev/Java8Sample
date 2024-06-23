@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class H2DatabaseTestDataMaker {
+public class H2DatabaseDataMaker {
 
     public static void main(String[] args) throws SQLException, IOException {
         DataSource dataSource = DataSourceConfig.getDataSource();

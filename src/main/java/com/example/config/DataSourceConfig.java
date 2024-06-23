@@ -1,5 +1,6 @@
 package com.example.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.h2.jdbcx.JdbcDataSource;
 
 import javax.sql.DataSource;
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Slf4j
 public class DataSourceConfig {
 
     public static DataSource getDataSource() throws IOException {
@@ -18,9 +20,9 @@ public class DataSourceConfig {
         String jdbcURL = properties.getProperty("jdbc.url");
         String username = properties.getProperty("jdbc.username");
         String password = properties.getProperty("jdbc.password");
-        System.out.println("jdbcURL: " + jdbcURL);
-        System.out.println("username: " + username);
-        System.out.println("password: " + password);
+        log.info("jdbcURL: {}", jdbcURL);
+        log.info("username: {}", username);
+        log.info("password: {}", password);
         JdbcDataSource dataSource = new JdbcDataSource();
 //        dataSource.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
         dataSource.setURL(jdbcURL);
