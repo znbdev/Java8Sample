@@ -15,7 +15,7 @@ public class H2DatabaseTestDataMaker {
         createTestBeanData(dataSource);
     }
 
-    private static void createTestBeanData(DataSource dataSource) throws SQLException {
+    static void createTestBeanData(DataSource dataSource) throws SQLException {
         TestBeanDao testBeanDao = new TestBeanDao(dataSource);
         TestBean bean = new TestBean("John Doe", "123 Main St", "A description", 25);
         testBeanDao.insertTestBean(bean);
