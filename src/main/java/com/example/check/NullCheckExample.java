@@ -1,10 +1,23 @@
 package com.example.check;
 
+import com.example.bean.ItemBean;
+
 import java.util.Objects;
 import java.util.stream.Stream;
 
 public class NullCheckExample {
     public static void main(String[] args) {
+        ItemBean itemBean = new ItemBean();
+        boolean anyNullOrEmpty = Stream.of(itemBean.getText1(), itemBean.getText2())
+                .anyMatch(text -> Objects.isNull(text) || text.isEmpty());
+        boolean numberIsNull = Objects.isNull(itemBean.getNumber());
+
+        if (anyNullOrEmpty || numberIsNull) {
+            System.out.println("One or more fields are null or empty");
+        } else {
+            System.out.println("All fields are non-null and non-empty");
+        }
+
         String var1 = "Hello";
         String var2 = null;
         String var3 = "World";
