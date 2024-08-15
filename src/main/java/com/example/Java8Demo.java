@@ -54,10 +54,11 @@ public class Java8Demo {
 
     public static void sortListDemo() {
         List<ItemBean> itemBeanList = Arrays.asList(
-                new ItemBean("1", "2", 10, new BigDecimal("40.00"))
-                , new ItemBean("2", "1", 20, new BigDecimal("30.00"))
-                , new ItemBean("1", "1", 30, new BigDecimal("20.00"))
-                , new ItemBean("1", "1", 40, new BigDecimal("10.00")));
+                new ItemBean("2", "1", 10, new BigDecimal("10.00"))
+                , new ItemBean("1", "2", 20, new BigDecimal("10.00"))
+                , new ItemBean("1", "1", 20, new BigDecimal("10.00"))
+                , new ItemBean("1", "1", 20, new BigDecimal("20.00"))
+                , new ItemBean("1", "1", 20, new BigDecimal("30.00")));
         log.info("排序前：");
         for (int i = 0; i < itemBeanList.size(); i++) {
             log.info("第{}行: {}", i + 1, itemBeanList.get(i));
@@ -69,6 +70,19 @@ public class Java8Demo {
                         .thenComparing(ItemBean::getText2, Comparator.nullsFirst(String::compareTo))
                         .thenComparing(Comparator.comparing(ItemBean::getNumber).reversed())
                         .thenComparing(ItemBean::getAmount, Comparator.nullsFirst(BigDecimal::compareTo)))
+                .collect(Collectors.toList());
+        log.info("排序后：");
+        for (int i = 0; i < itemBeanList.size(); i++) {
+            log.info("第{}行: {}", i + 1, itemBeanList.get(i));
+        }
+
+        // 如果不需要 nullsFirst 设定，并且你确定所有字段都不会为 null，或者你希望 null 值按默认的自然顺序处理，那么可以直接移除 Comparator.nullsFirst，
+        // 让 Comparator.comparing 按照字段的自然顺序进行排序。
+        itemBeanList = itemBeanList.stream()
+                .sorted(Comparator.comparing(ItemBean::getText1)
+                        .thenComparing(ItemBean::getText2)
+                        .thenComparing(Comparator.comparing(ItemBean::getNumber).reversed())
+                        .thenComparing(ItemBean::getAmount))
                 .collect(Collectors.toList());
         log.info("排序后：");
         for (int i = 0; i < itemBeanList.size(); i++) {
