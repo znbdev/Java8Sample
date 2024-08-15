@@ -13,4 +13,9 @@ public class Java8DemoTest {
     public void userValidatorTest() {
         Java8Demo.userValidator();
     }
+
+    @Test
+    public void sortListDemoTest() {
+        Java8Demo.sortListDemo();
+    }
 }
