@@ -34,7 +34,7 @@ public class JsonFileReader {
         return readFileContent(filePath);
     }
 
-    private static String readFileContent(String filePath) throws IOException {
+    public static String readFileContent(String filePath) throws IOException {
         // 读取文件内容并将其转换为字符串
         return new String(Files.readAllBytes(Paths.get(filePath)));
     }
