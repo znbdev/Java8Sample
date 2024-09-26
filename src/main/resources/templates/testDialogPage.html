@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Call Java Page with Iframe</title>
+    <style>
+        /* Dialog styling */
+        #dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: white;
+            z-index: 1000;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        #closeBtn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>JavaScript Calling Java-Generated Page Example with Iframe</h1>
+
+<div>
+    <button onclick="showDialog()">Load Dynamic Page</button>
+</div>
+
+<div id="overlay"></div>
+<div id="dialog">
+    <span id="closeBtn" onclick="closeDialog()">X</span>
+    <iframe id="iframeContent" src="" width="400" height="300"></iframe>
+</div>
+
+<div id="pageContent" style="border: 1px solid #000; margin-top: 20px; padding: 10px;">
+    <p>The dynamic page content will be loaded here.</p>
+</div>
+
+<script>
+    // Function to show the dialog with iframe
+    function showDialog() {
+        const iframe = document.getElementById('iframeContent');
+        iframe.src = '/dynamicDialogPage';
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('dialog').style.display = 'block';
+    }
+
+    // Function to close the dialog
+    function closeDialog() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('dialog').style.display = 'none';
+    }
+
+    // Function to handle message from iframe
+    window.addEventListener('message', function(event) {
+        if (event.origin === window.location.origin) {
+            const receivedName = event.data;
+            document.getElementById('pageContent').innerText = `Received name: ${receivedName}`;
+            closeDialog();
+        }
+    }, false);
+</script>
+</body>
+</html>

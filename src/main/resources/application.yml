@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+    cache-duration: 3600
+  thymeleaf:
+    cache: false # Cache switch, set to true in production environment
+    prefix: classpath:/templates/ # Template Storage Path
+    suffix: .html # Template Suffix
+    mode: HTML5 # Template Mode
+    check-template-location: true # Check if the template exists
+    enabled: true # Whether to enable Thymeleaf
+    encoding: UTF-8 # Template code encoding

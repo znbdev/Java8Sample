@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dynamic Page in Iframe</title>
+</head>
+<body>
+<h1>Enter your name</h1>
+<form onsubmit="submitName(event)">
+    <input type="text" id="nameInput" placeholder="Enter your name" />
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    function submitName(event) {
+        event.preventDefault();
+        const name = document.getElementById('nameInput').value;
+
+        // Send the name to the parent window
+        window.parent.postMessage(name, window.location.origin);
+    }
+</script>
+</body>
+</html>

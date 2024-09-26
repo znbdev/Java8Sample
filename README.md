@@ -11,3 +11,5 @@ Java8 Sample
 cd [target repository dir]
 ./gradlew clean build --refresh-dependencies --stacktrace
 ```
+
+[index](http://localhost:8080)
