@@ -12,6 +12,7 @@ java {
 
 ext {
     junitVersion = '5.10.0'
+    junitPlatformVersion = '1.9.1'
 }
 
 repositories {
@@ -26,6 +27,11 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+    testImplementation("org.junit.platform:junit-platform-suite:${junitPlatformVersion}")
+    testImplementation("org.junit.platform:junit-platform-console-standalone:${junitPlatformVersion}")
+    testImplementation("org.junit.platform:junit-platform-reporting:${junitPlatformVersion}")
+    implementation(group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0')
+
 
 //    testImplementation "org.mockito:mockito-core:3.12.4"
 //    testImplementation "org.mockito:mockito-junit-jupiter:3.12.4"
