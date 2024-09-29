@@ -21,7 +21,7 @@ public class JsonFileReader {
         log.info("jsonContentFromLocal: {}", jsonContentFromLocal);
 
         // 读取Resources目录下的test.json文件为字符串
-        String jsonContentFromResources = readFileFromResources("test.json");
+        String jsonContentFromResources = readFileFromResources("tmp/test.json");
         log.info("jsonContentFromResources: {}", jsonContentFromResources);
     }
 

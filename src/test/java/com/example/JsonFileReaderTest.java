@@ -16,7 +16,7 @@ class JsonFileReaderTest {
 
     @Test
     void testReadFileFromResources() throws IOException {
-        String jsonContent = JsonFileReader.readFileFromResources("test.json");
+        String jsonContent = JsonFileReader.readFileFromResources("tmp/test.json");
         System.out.println(jsonContent);
     }
 
