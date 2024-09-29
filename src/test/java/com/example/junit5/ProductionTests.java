@@ -5,7 +5,7 @@ import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectPackages("com.howtodoinjava.junit5.examples.packageA")
+@SelectPackages("com.example.junit5.packageA")
 @IncludeTags("production")
 public class ProductionTests 
 {

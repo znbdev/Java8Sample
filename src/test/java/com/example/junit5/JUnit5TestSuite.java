@@ -4,8 +4,8 @@ import org.junit.platform.suite.api.ExcludeTags;
 import org.junit.platform.suite.api.IncludePackages;
 import org.junit.platform.suite.api.SelectPackages;
 
-@SelectPackages("com.howtodoinjava.junit5.examples")
-@IncludePackages("com.howtodoinjava.junit5.examples.packageC")
+@SelectPackages("com.example.junit5")
+@IncludePackages("com.example.junit5.packageC")
 @ExcludeTags("PROD")
 public class JUnit5TestSuite {
 

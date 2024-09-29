@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.suite.api.SelectPackages;
 
-@SelectPackages("com.howtodoinjava.junit5.examples")
+@SelectPackages("com.example.junit5")
 class ExpectedExceptionTest
 {
 	@Test
