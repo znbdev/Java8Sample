@@ -1,23 +1,29 @@
 package com.example;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.io.IOException;
 
-public class JsonFileReaderTest {
+@SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
+class JsonFileReaderTest {
+
+    @Value("${test.json.filePath}")
+    private String testJsonFilePath;
 
     @Test
-    public void testReadFileFromResources() throws IOException {
+    void testReadFileFromResources() throws IOException {
         String jsonContent = JsonFileReader.readFileFromResources("test.json");
         System.out.println(jsonContent);
     }
 
     @Test
-    public void testReadFileContent() throws IOException {
-        // For Windows
-//        String filePath = "C:/path/to/your/test.json";
-        // For Mac or Linux
-        String filePath = "/Users/znb/workspace/Java8Sample/src/main/resources/test.json";
+    void testReadFileContent() throws IOException {
+        // 使用application-test.properties中指定的路径
+        String filePath = System.getProperty("user.dir") + "/" + testJsonFilePath;
         // 读取test.json文件为字符串
         String jsonContent = JsonFileReader.readFileContent(filePath);
         System.out.println(jsonContent);

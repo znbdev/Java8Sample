@@ -12,6 +12,11 @@ java {
     targetCompatibility = '1.8'
 }
 
+ext {
+    junitVersion = '5.10.0'
+    junitPlatformVersion = '1.10.0'
+}
+
 repositories {
     mavenCentral()
 }
@@ -21,9 +26,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
-    testImplementation 'junit:junit:4.13.2'
+
+    // Test dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+    testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+    testImplementation("org.junit.platform:junit-platform-suite:${junitPlatformVersion}")
+    testImplementation("org.junit.platform:junit-platform-console-standalone:${junitPlatformVersion}")
+    testImplementation("org.junit.platform:junit-platform-reporting:${junitPlatformVersion}")
 }
 
 test {
-    useJUnit()
+    useJUnitPlatform()
+    afterTest { desc, result ->
+        logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
 }

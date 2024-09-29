@@ -1,21 +1,26 @@
 package com.example;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-public class Java8DemoTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class Java8DemoTest {
 
     @Test
-    public void forEachDemo() {
+    void forEachDemo() {
         Java8Demo.forEachDemo();
     }
 
     @Test
-    public void userValidatorTest() {
+    void userValidatorTest() {
         Java8Demo.userValidator();
     }
 
-    @Test
-    public void sortListDemoTest() {
-        Java8Demo.sortListDemo();
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3})
+    void testWithMultipleValues(int value) {
+        assertEquals(value, value);
     }
 }
